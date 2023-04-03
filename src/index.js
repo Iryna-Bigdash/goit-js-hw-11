@@ -1,3 +1,7 @@
+import Notiflix from 'notiflix';
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
+
 refs = {
   formEl: document.querySelector('#search-form'),
   cardContainer: document.querySelector('.gallery'),
@@ -9,12 +13,29 @@ let currentPage = 1;
 refs.formEl.addEventListener('submit', onFormSubmit);
 refs.loadBtn.addEventListener('click', onloadBtnClick);
 
+refs.loadBtn.classList.add('is-hidden');
+refs.cardContainer.insertAdjacentHTML('beforeend', renderImgs(cards));
+
+const lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionDelay: 250,
+});
+
+
+
 function onFormSubmit(e) {
   e.preventDefault();
-    searchField = e.currentTarget.elements.searchQuery.value.trim();
+  searchField = e.currentTarget.elements.searchQuery.value.trim();
     resetPage();
-
-  getPictures(searchField, currentPage);
+    
+    if (searchField === '') {
+        Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
+    } else {
+        Notiflix.Notify.success('Hooray! We found totalHits images.'); 
+        getPictures();
+        renderImgs();
+        refs.loadBtn.classList.remove('is-hidden');
+    }
 }
 
 function getPictures() {
@@ -25,14 +46,49 @@ function getPictures() {
     .then(responce => responce.json())
     .then(data => {
       currentPage += 1;
-    });
-  // .catch(console.log(error));
+      renderImgs(data);
+    })
+    .catch(console.log('error'));
+}
+
+function renderImgs(cards) {
+return cards.hits.map(
+({
+      webformatURL,
+      largeImageURL,
+      tags,
+      likes,
+      views,
+      comments,
+      downloads,
+    }) => {
+      return `<div class="photo-card">
+            <a class="photo-link" href="${largeImageURL}">
+  <img src="${webformatURL}" alt="${tags}" loading="lazy" width ='300px' height ='200px'/><a/>
+  <div class="info">
+    <p class="info-item">
+      <b>Likes: ${likes}</b>
+    </p>
+    <p class="info-item">
+      <b>Views: ${views}</b>
+    </p>
+    <p class="info-item">
+      <b>Comments: ${comments}</b>
+    </p>
+    <p class="info-item">
+      <b>Downloads: ${downloads}</b>
+    </p>
+  </div>
+</div>`;
+    }
+  )
+  .join('');
 }
 
 function onloadBtnClick() {
-   getPictures();  
+  getPictures();
 }
 
 function resetPage() {
-    currentPage = 1;
+  currentPage = 1;
 }

@@ -1,5 +1,7 @@
 .gallery{
-    display: flex;
     gap:30px;
     background-color: aliceblue;
+}
+.is-hidden {
+    opacity: 0;
 }
