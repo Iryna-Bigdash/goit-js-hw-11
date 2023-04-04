@@ -1,7 +1,55 @@
-.gallery{
-    gap:30px;
-    background-color: aliceblue;
+:root {
+    --timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    --animation-duration: 250ms;
+}
+.info-item{
+padding: 0;
+margin: 0;
+}
+
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 1200px;
+    gap: 30px;
+    margin: auto;
+    padding: auto;
+}
+
+.photo-card {
+    position: relative;
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2),
+        0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+}
+.gallery__link {
+    text-decoration: none;
+}
+
+.gallery__image:hover {
+    transform: scale(1.03);
+}
+
+.gallery__image {
+    display: block;
+    object-fit: cover;
+    transition: transform var(--animation-duration) var(--timing-function);
+}
+
+.gallery__link {
+    display: block;
+    text-decoration: none;
+    color: rgb(46, 35, 35);
+    height: 100%;
+}
+
+.gallery__link:hover {
+    cursor: zoom-in;
 }
 .is-hidden {
     opacity: 0;
+}
+
+.info {
+margin-bottom: 20px;
 }
