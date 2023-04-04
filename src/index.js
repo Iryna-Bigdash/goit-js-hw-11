@@ -10,6 +10,9 @@ const refs = {
   loadBtn: document.querySelector('.load-more'),
   searchBtn: document.querySelector('button[type="submit"]'),
 };
+
+const myKey = '34703273-719fc97d4df3919ec9a1e2b2b';
+const BASE_URL = 'https://pixabay.com';
 let searchField = '';
 let currentPage = 1;
 
@@ -31,7 +34,7 @@ function onFormSubmit(e) {
   if (searchField === '') {
     return Notiflix.Notify.failure('Please type the field..');
   } else {
-    getPictures().then(cards => {
+    getPictures(URL).then(cards => {
       if (cards.total === 0) {
         refs.loadBtn.classList.add('is-hidden');
         Notiflix.Notify.failure(
@@ -45,10 +48,9 @@ function onFormSubmit(e) {
 }
 
 async function getPictures() {
-  const myKey = '34703273-719fc97d4df3919ec9a1e2b2b';
-  const BASE_URL = 'https://pixabay.com';
-  const URL = `${BASE_URL}/api/?key=${myKey}&q=${searchField}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${currentPage}`;
 
+const URL = `${BASE_URL}/api/?key=${myKey}&q=${searchField}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${currentPage}`;
+  
   try {
     const responce = await axios(URL);
     const cards = responce.data;
