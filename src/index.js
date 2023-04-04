@@ -4,7 +4,7 @@ import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import { renderImgs } from './partials/jsmodules/renderCards';
 
-refs = {
+const refs = {
   formEl: document.querySelector('#search-form'),
   cardContainer: document.querySelector('.gallery'),
   loadBtn: document.querySelector('.load-more'),
