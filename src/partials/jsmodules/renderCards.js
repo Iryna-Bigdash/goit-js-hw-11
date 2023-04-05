@@ -1,5 +1,5 @@
 export function renderImgs(cards) {
-  return (murkup = cards.hits
+  return cards.hits
     .map(
       ({
         webformatURL,
@@ -32,5 +32,5 @@ export function renderImgs(cards) {
 </div>`;
       }
     )
-    .join(''));
+    .join('');
 }
