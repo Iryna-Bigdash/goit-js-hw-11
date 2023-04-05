@@ -68,7 +68,8 @@ async function getPictures(URL) {
 }
 
 function onloadBtnClick() {
-  getPictures();
+    const URL = `${BASE_URL}/api/?key=${myKey}&q=${searchField}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${currentPage}`;
+  getPictures(URL);
 }
 
 function resetPage() {
