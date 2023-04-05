@@ -22,3 +22,28 @@
 //     }
 // }
 
+
+// import PixabayApiServise from './partials/jsmodules/fetchApiData';
+
+// const refs = {
+//   searchForm: document.querySelector('#search-form'),
+//   galleryContainer: document.querySelector('.gallery'),
+//   loadMoreBtn: document.querySelector('.load-more'),
+//   searchBtn: document.querySelector('button[type="submit"]'),
+// };
+
+// const PixabayApiServise = new PixabayApiServise();
+// console.log(PixabayApiServise);
+
+// refs.searchForm.addEventListener('submit', onSearch);
+// refs.loadMoreBtn.addEventListener('click', onLoadMore);
+
+// function onSearch(e) {
+//   e.preventDefault();
+
+//   PixabayApiServise.query = e.currentTarget.elements.query.value.trim();
+//   PixabayApiServise.fetchImages();
+// }
+// function onLoadMore() {
+//   PixabayApiServise.fetchImages();
+// }

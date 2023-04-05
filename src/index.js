@@ -35,18 +35,7 @@ function onFormSubmit(e, cards) {
   if (searchField === '') {
     Notiflix.Notify.failure('Please type the field..');
   } else {
-    getPictures(URL, cards).then(cards => {
-      console.log(cards);
-      if (cards.total === 0) {
-        console.log(cards.total);
-        refs.loadBtn.classList.add('is-hidden');
-        Notiflix.Notify.failure(
-          '"Sorry, there are no images matching your search query. Please try again."'
-        );
-      } else {
-        Notiflix.Notify.success(`Hooray! We found ${cards.totalHits} images.`);
-      }
-    });
+    getPictures(URL, cards);
   }
 }
 
@@ -58,8 +47,17 @@ async function getPictures(URL) {
     currentPage += 1;
     refs.loadBtn.classList.remove('is-hidden');
     lightbox.refresh();
-    console.log(cards)
-    return cards;
+    console.log(cards);
+
+    if (cards.total === 0) {
+      console.log(cards.total);
+      refs.loadBtn.classList.add('is-hidden');
+      Notiflix.Notify.failure(
+        '"Sorry, there are no images matching your search query. Please try again."'
+      );
+    } else {
+      Notiflix.Notify.success(`Hooray! We found ${cards.totalHits} images.`);
+    }
   } catch {
     refs.loadBtn.classList.add('is-hidden');
     Notiflix.Notify.failure(
@@ -69,7 +67,7 @@ async function getPictures(URL) {
 }
 
 function onloadBtnClick() {
-    const URL = `${BASE_URL}/api/?key=${myKey}&q=${searchField}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${currentPage}`;
+  const URL = `${BASE_URL}/api/?key=${myKey}&q=${searchField}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${currentPage}`;
   getPictures(URL);
 }
 
