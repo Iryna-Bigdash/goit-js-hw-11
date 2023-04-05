@@ -25,7 +25,7 @@ const lightbox = new SimpleLightbox('.gallery a', {
   captionDelay: 250,
 });
 
-function onFormSubmit(e) {
+function onFormSubmit(e, cards) {
   e.preventDefault();
   clearGalleryContainer();
   searchField = e.currentTarget.elements.searchQuery.value.trim();
@@ -35,7 +35,7 @@ function onFormSubmit(e) {
   if (searchField === '') {
     Notiflix.Notify.failure('Please type the field..');
   } else {
-    getPictures(URL).then(cards => {
+    getPictures(URL, cards).then(cards => {
       console.log(cards);
       if (cards.total === 0) {
         console.log(cards.total);
@@ -58,7 +58,7 @@ async function getPictures(URL) {
     currentPage += 1;
     refs.loadBtn.classList.remove('is-hidden');
     lightbox.refresh();
-    console.log(cards);
+    console.log(cards)
     return cards;
   } catch {
     refs.loadBtn.classList.add('is-hidden');
