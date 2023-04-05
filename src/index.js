@@ -52,12 +52,13 @@ function onFormSubmit(e) {
 
 async function getPictures(URL) {
   try {
-    const responce = await axios(URL);
-    const cards = responce.data;
+    const response = await axios(URL);
+    const cards = response.data;
     refs.cardContainer.insertAdjacentHTML('beforeend', renderImgs(cards));
     currentPage += 1;
     refs.loadBtn.classList.remove('is-hidden');
     lightbox.refresh();
+    console.log(cards);
     return cards;
   } catch {
     refs.loadBtn.classList.add('is-hidden');
