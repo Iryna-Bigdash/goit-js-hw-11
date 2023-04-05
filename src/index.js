@@ -1,5 +1,5 @@
-import axios from 'axios';
 import Notiflix from 'notiflix';
+import axios from 'axios';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import { renderImgs } from './partials/jsmodules/renderCards';
@@ -30,16 +30,15 @@ function onFormSubmit(e) {
   clearGalleryContainer();
   searchField = e.currentTarget.elements.searchQuery.value.trim();
   resetPage();
+  const URL = `${BASE_URL}/api/?key=${myKey}&q=${searchField}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${currentPage}`;
 
   if (searchField === '') {
-    return Notiflix.Notify.failure('Please type the field..');
+    Notiflix.Notify.failure('Please type the field..');
   } else {
-    const cards = getPictures().then(cards => {
+    getPictures(URL).then(cards => {
       console.log(cards);
-
       if (cards.total === 0) {
         console.log(cards.total);
-
         refs.loadBtn.classList.add('is-hidden');
         Notiflix.Notify.failure(
           '"Sorry, there are no images matching your search query. Please try again."'
@@ -51,9 +50,7 @@ function onFormSubmit(e) {
   }
 }
 
-async function getPictures() {
-  const URL = `${BASE_URL}/api/?key=${myKey}&q=${searchField}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${currentPage}`;
-
+async function getPictures(URL) {
   try {
     const responce = await axios(URL);
     const cards = responce.data;
