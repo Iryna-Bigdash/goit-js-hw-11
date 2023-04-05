@@ -34,8 +34,12 @@ function onFormSubmit(e) {
   if (searchField === '') {
     return Notiflix.Notify.failure('Please type the field..');
   } else {
-    getPictures(URL).then(cards => {
+    getPictures().then(cards => {
+      console.log(cards);
+
       if (cards.total === 0) {
+        console.log(cards.total);
+
         refs.loadBtn.classList.add('is-hidden');
         Notiflix.Notify.failure(
           '"Sorry, there are no images matching your search query. Please try again."'
@@ -48,9 +52,8 @@ function onFormSubmit(e) {
 }
 
 async function getPictures() {
+  const URL = `${BASE_URL}/api/?key=${myKey}&q=${searchField}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${currentPage}`;
 
-const URL = `${BASE_URL}/api/?key=${myKey}&q=${searchField}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${currentPage}`;
-  
   try {
     const responce = await axios(URL);
     const cards = responce.data;
