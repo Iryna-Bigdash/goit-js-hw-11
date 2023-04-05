@@ -1,11 +1,21 @@
 .search-form {
   text-align: center;
-  padding: 40 0px;
-  background-color: rgb(191, 219, 244);
+  padding: 20 0px;
+  background-color: #92469c;
   margin-bottom: 20px;
 }
-button {
-color: aliceblue;
-background-color: rgb(152, 152, 195);
-border: 1px solid rgb(93, 93, 121);
+input {
+  min-height: 40px;
+  min-width: 300px;
+  border-radius: 4px;
+}
+.search-form button {
+text-align: center;  
+color: rgb(92, 83, 83);
+background-color: rgb(255, 255, 255);
+border: 2px solid rgb(92, 83, 83);
+border-radius: 4px;
+min-height: 40px;
+min-width: 120px;
+cursor: pointer;
 }

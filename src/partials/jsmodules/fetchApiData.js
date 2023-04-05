@@ -1,3 +1,48 @@
+import axios from 'axios';
+import Notiflix from 'notiflix';
+import { renderImgs } from './renderCards';
+
+const refs = {
+  formEl: document.querySelector('#search-form'),
+  cardContainer: document.querySelector('.gallery'),
+  loadBtn: document.querySelector('.load-more'),
+  searchBtn: document.querySelector('button[type="submit"]'),
+};
+
+export async function getPictures(URL) {
+  try {
+    const response = await axios(URL);
+    const cards = response.data;
+    refs.cardContainer.insertAdjacentHTML('beforeend', renderImgs(cards));
+    currentPage += 1;
+    refs.loadBtn.classList.remove('is-hidden');
+    lightbox.refresh();
+    console.log(cards);
+
+    if (cards.total === 0) {
+      console.log(cards.total);
+      refs.loadBtn.classList.add('is-hidden');
+      Notiflix.Notify.failure(
+        '"Sorry, there are no images matching your search query. Please try again."'
+      );
+    }
+
+    if (cards.totalHits <= currentPage * 40) {
+      refs.loadBtn.classList.add('is-hidden');
+      Notiflix.Notify.failure(
+        "We're sorry, but you've reached the end of search results."
+      );
+    } else {
+      Notiflix.Notify.success(`Hooray! We found ${cards.totalHits} images.`);
+    }
+  } catch {
+    refs.loadBtn.classList.add('is-hidden');
+    Notiflix.Notify.failure(
+      "We're sorry, but you've reached the end of search results."
+    );
+  }
+}
+
 // export default class PixabayApiServise{
 //     constructor() {
 //         this.searchQuery = '';
@@ -21,7 +66,6 @@
 //         this.searchQuery = newQuery;
 //     }
 // }
-
 
 // import PixabayApiServise from './partials/jsmodules/fetchApiData';
 

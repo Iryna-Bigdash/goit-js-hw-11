@@ -44,25 +44,32 @@ async function getPictures(URL) {
     const response = await axios(URL);
     const cards = response.data;
     refs.cardContainer.insertAdjacentHTML('beforeend', renderImgs(cards));
-    currentPage += 1;
+    // currentPage += 1;
     refs.loadBtn.classList.remove('is-hidden');
     lightbox.refresh();
-    console.log(cards);
 
     if (cards.total === 0) {
-      console.log(cards.total);
       refs.loadBtn.classList.add('is-hidden');
       Notiflix.Notify.failure(
-        '"Sorry, there are no images matching your search query. Please try again."'
+        'Sorry, there are no images matching your search query. Please try again.'
       );
-    } else {
+      return;
+    }
+    if (cards.totalHits <= currentPage * 40) {
+      refs.loadBtn.classList.add('is-hidden');
+      Notiflix.Notify.failure(
+        "We're sorry, but you've reached the end of search results."
+      );
+    } else if (currentPage === 1) {
       Notiflix.Notify.success(`Hooray! We found ${cards.totalHits} images.`);
     }
+    currentPage += 1;
   } catch {
-    refs.loadBtn.classList.add('is-hidden');
-    Notiflix.Notify.failure(
-      "We're sorry, but you've reached the end of search results."
-    );
+    console.log('hi from catch');
+    // refs.loadBtn.classList.add('is-hidden');
+    // Notiflix.Notify.failure(
+    //   "We're sorry, but you've reached the end of search results."
+    // );
   }
 }
 
