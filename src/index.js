@@ -34,7 +34,7 @@ function onFormSubmit(e) {
   if (searchField === '') {
     return Notiflix.Notify.failure('Please type the field..');
   } else {
-    cards = getPictures().then(cards => {
+    const cards = getPictures().then(cards => {
       console.log(cards);
 
       if (cards.total === 0) {
